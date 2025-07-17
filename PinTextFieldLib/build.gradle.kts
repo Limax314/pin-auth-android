@@ -1,6 +1,8 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    //id("maven-publish")
+    `maven-publish`
 }
 
 android {
@@ -8,16 +10,10 @@ android {
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.sharpedge.pintextfield"
         minSdk = 24
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -36,35 +32,57 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         compose = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.7.2")
+    //implementation("androidx.core:core-ktx:1.9.0")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.ui:ui")
+    // Include only if you use graphics APIs from this library
     implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation(project(":PinTextFieldLib"))
+    //debugImplementation("androidx.compose.ui:ui-tooling-preview")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
+
+//tasks.register("printComponents") {
+//    doLast {
+//        components.forEach {
+//            println(it.name)
+//        }
+//    }
+//}
+
+val libraryVersion: String = project.property("libraryVersion") as String
+// Place this at the end of your build.gradle.kts file
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                groupId = "com.sharpedge"
+                artifactId = "ComposePinInput"
+                version = libraryVersion
+
+                // This should match the output of your printComponents task
+                from(components["release"])
+            }
+        }
+        repositories {
+            // Comment out the local maven repository before pushing to remote
+//            maven {
+//                url = uri("file:///${rootProject.buildDir}/localMaven")
+//            }
+        }
+    }
 }

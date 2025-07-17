@@ -1,0 +1,8 @@
+subprojects:
+  PinTextFieldLib:
+    build:
+      - "clean"
+      - "build"
+
+jdk:
+  - openjdk17
