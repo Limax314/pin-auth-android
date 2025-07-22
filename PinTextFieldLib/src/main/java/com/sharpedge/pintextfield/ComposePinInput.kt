@@ -40,12 +40,48 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-
+/**
+ * PIN 입력 UI 스타일을 정의하는 enum 클래스
+ *
+ * - [BOX]: 각 PIN 입력란이 박스 형태의 테두리로 표시됩니다.
+ * - [UNDERLINE]: 각 PIN 입력란이 밑줄 형태로 표시됩니다.
+ *
+ * @see ComposePinInputStyle.BOX
+ * @see ComposePinInputStyle.UNDERLINE
+ */
 enum class ComposePinInputStyle {
     BOX,
     UNDERLINE
 }
 
+/**
+ * 사용자 정의 가능한 PIN(개인 식별 번호) 입력 필드를 생성하는 Composable 함수
+ *
+ * 박스 및 밑줄 스타일을 포함한 다양한 스타일 옵션을 허용하며, 값 변경 및 입력 완료에
+ * 대한 콜백을 제공합니다.
+ *
+ * @param value 현재 PIN 입력 값
+ * @param onValueChange PIN 값이 변경될 때 호출되는 콜백 함수
+ * @param maxSize PIN의 최대 길이(기본값: 4)
+ * @param mask PIN을 마스키할 문자(null일 경우 실제 문자가 표시)
+ * @param isError 오류 상태 여부(true일 경우 오류 스타일 적용)
+ * @param onPinEntered PIN 입력이 완료되었을 때 호출되는 콜백 함수
+ * @param cellShape 각 PIN 입력 셀의 모양, [ComposePinInputStyle.BOX] 스타일에서 사용
+ * @param fontColor PIN 텍스트의 색상
+ * @param cellBorderColor PIN 입력 셀의 테두리 색상
+ * @param rowPadding PIN 입력 필드 전체의 패딩 값
+ * @param cellPadding 각 PIN 입력 셀 사이의 간격
+ * @param cellSize 각 PIN 입력 실의 크기
+ * @param cellBorderWidth PIN 입력 셀의 테두리 두께, [ComposePinInputStyle.BOX] 스타일에서 사용
+ * @param textFontSize PIN 텍스트의 글자 크기
+ * @param focusedCellBorderColor 포커스된 PIN 입력 셀의 테두리 색상
+ * @param errorBorderColor 오류 상태일 때의 테두리 색상
+ * @param cellBackgroundColor 각 PIN 입력 셀의 배경색
+ * @param cellColorOnSelect 문자가 입력된 셀의 배경색
+ * @param borderThickness 밑줄의 두께, [ComposePinInputStyle.UNDERLINE] 스타일에서 사용
+ * @param style PIN 입력 UI의 스타일, [ComposePinInputStyle.BOX] 또는
+ * [ComposePinInputStyle.UNDERLINE] 사용 가능
+ */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 public fun ComposePinInput(
@@ -70,7 +106,6 @@ public fun ComposePinInput(
     borderThickness: Dp = 2.dp,
     style: ComposePinInputStyle = ComposePinInputStyle.BOX
 ) {
-
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusedState = remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -84,6 +119,7 @@ public fun ComposePinInput(
             onValueChange = { text ->
                 if (text.length <= maxSize) {
                     onValueChange(text)
+
                     if (text.length == maxSize) {
                         onPinEntered?.invoke(text)
                     }
@@ -102,13 +138,12 @@ public fun ComposePinInput(
                     focusedState.value = it.isFocused
                 }
                 .focusRequester(focusRequester),
-
-            textStyle = TextStyle.Default.copy(color = Color.Transparent),
-
-            )
+            textStyle = TextStyle.Default.copy(color = Color.Transparent)
+        )
 
         // UI for the Pin
         val boxWidth = cellSize
+
         Row(
             horizontalArrangement = Arrangement.spacedBy(cellPadding),
             modifier = Modifier
@@ -150,8 +185,6 @@ public fun ComposePinInput(
                             )
                         }
                     }
-
-
                 } else {
                     // Underline style logic here
                     Box(
@@ -184,6 +217,7 @@ public fun ComposePinInput(
                             val lineHeightDp: Dp = with(LocalDensity.current) {
                                 textFontSize.toDp()
                             }
+
                             Text(
                                 text = displayChar.toString(),
                                 modifier = Modifier
