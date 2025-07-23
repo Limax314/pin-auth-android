@@ -9,6 +9,13 @@
 | **`PinTextFieldLib`** | PIN 입력 UI 컴포넌트를 제공하는 **재사용 가능한 라이브러리**입니다. 독립적으로 존재하며 다른 프로젝트에서도 사용할 수 있습니다. | 자동차 부품(엔진) |
 | **`Gradle Scripts`**  | 프로젝트의 빌드 방식과 모듈 간의 의존성을 정의하는 **설계도** 역할을 합니다.                                | 조립 설명서     |
 
+### 📂 app 모듈 상세 구조
+
+* `manifests`:
+* `kotlin+java`:
+* `res`:
+* `res (generated)`: 
+
 ---
 
 # ComposePinInput - Jetpack Compose PIN 번호 입력 라이브러리
