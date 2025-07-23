@@ -1,4 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+<!--
+/**
+ * @remarks
+ * 문법 정리 예정
+ */
+-->
+
+<!--
+/**
+ * :
+ * @tag xml_declaration
+ * @brief XML 선언 태그입니다.
+ *
+ * @description
+ * 이 파일이 XML 문서임을 정의하고, 사용된 XML 버전과 문자 인코딩을 지정합니다.
+ * 모든 XML 파일의 가장 첫 줄에 위치해야 합니다.
+ *
+ * @property version="1.0" 사용된 XML의 버전을 나타냅니다. "1.0"이 표준입니다.
+ * @property encoding="utf-8" 파일의 문자 인코딩 방식을 지정합니다.
+ * "utf-8"은  다국어 문자를 지원하는 보편적인 인코딩 방식입니다.
+ *
+ * @remarks
+ * 이 줄은 XML 파서(parser)에게 파일을 어떻게 해석해야 하는지 알려주는 중요한
+ * 역할을 합니다. PHP 태그와 유사해 보일 수 있지만, 이는 표준 XML 구문입니다.
+ */
+-->
+
+<!--
+/**
+ * @file AndroidManifest.xml
+ * @brief PinTextFieldLib 라이브러리 모듈의 매니페스트 파일입니다.
+ *
+ * @description
+ * - 이 파일은 Android 빌드 도구, Android 운영체제 및 Google Play에 라이브러리에
+ * 대한 필수 정보를 설명합니다.
+ * - 패키지 이름을 선언하고 라이브러리 구성 요소를 설명합니다.
+ *
+ * @see [Android Manifest 개요](
+ * https://developer.android.com/guide/topics/manifest/manifest-intro
+ * )
+ */
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <!--
+  /**
+   * @tag manifest
+   * @brief 매니페스트 파일의 루트 요소입니다.
+   *
+   * @property xmlns:android Android 네임스페이스를 정의합니다.
+   * 'android:' 접두사를 사용하여 표준 Android 속성에 접근할 수 있도록 합니다.
+   * (예: android:name, android:label)
+   * @property package (현재는 사용되지 않음) 이 속성은 앱의 고유한 패키지
+   * 이름을 정의합니다.
+   * 라이브러리 모듈에서는 보통 build.gradle 파일의 namespace에 의해 설정되므로
+   * 매니페스트에 직접 명시하지 않는 것이 일반적입니다.
+   *
+   * @remarks
+   * - 라이브러리 프로젝트의 AndroidManifest.xml은 일반적으로 앱 모듈의 매니페스트와
+   * 병합(merge)됩니다. 따라서 여기에는 라이브러리 자체에 필요한 최소한의
+   * 구성 요소만 선언하는 것이 좋습니다.
+   * - 현재 이 라이브러리는 별도의 컴포넌트(Activity, Service 등)를 선언하고
+   * 있지 않으므로 비어있습니다.
+   */
+  -->
 </manifest>

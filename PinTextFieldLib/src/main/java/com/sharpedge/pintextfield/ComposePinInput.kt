@@ -150,7 +150,7 @@ public fun ComposePinInput(
                 .padding(rowPadding)
         ) {
             repeat(maxSize) { index ->
-                val isActiveBox = focusedState.value && index == value.length
+                val isActiveBox = focusedState.value && (index == value.length)
 
                 if (style == ComposePinInputStyle.BOX) {
                     // Box Style Pin field logic starts from here
@@ -177,6 +177,7 @@ public fun ComposePinInput(
                     ) {
                         if (index < value.length) {
                             val displayChar = mask ?: value[index]
+
                             Text(
                                 text = displayChar.toString(),
                                 modifier = Modifier.align(Alignment.Center),

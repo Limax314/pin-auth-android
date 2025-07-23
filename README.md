@@ -1,3 +1,20 @@
+## 프로젝트 구조
+
+이 프로젝트는 안드로이드의 **멀티 모듈 아키텍처(Multi-module Architecture)**를 따르고 있으며,
+각 모듈은 다음과 같은 명확한 역할을 수행합니다.
+
+| 모듈명                   | 역할                                                                           | 비유         |
+|-----------------------|------------------------------------------------------------------------------|------------|
+| **`app`**             | 최종 사용자가 설치하는 **애플리케이션**입니다.`PinTextFieldLib`를 가져와 실제 화면에 구현합니다.              | 완성된 자동차    |
+| **`PinTextFieldLib`** | PIN 입력 UI 컴포넌트를 제공하는 **재사용 가능한 라이브러리**입니다. 독립적으로 존재하며 다른 프로젝트에서도 사용할 수 있습니다. | 자동차 부품(엔진) |
+| **`Gradle Scripts`**  | 프로젝트의 빌드 방식과 모듈 간의 의존성을 정의하는 **설계도** 역할을 합니다.                                | 조립 설명서     |
+
+---
+
+# @remarks
+
+# 하단 문구 추후 한글 번역 예정
+
 # ComposePinInput - A Jetpack Compose PIN Entry Library
 
 Welcome to the `ComposePinInput` library for Android, built with Kotlin and Jetpack Compose using
