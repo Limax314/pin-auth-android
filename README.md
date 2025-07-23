@@ -1,6 +1,6 @@
 ## 프로젝트 구조
 
-이 프로젝트는 안드로이드의 **멀티 모듈 아키텍처(Multi-module Architecture)**를 따르고 있으며,
+이 프로젝트는 안드로이드의 **멀티 모듈 아키텍처(Multi-module Architecture)** 를 따르고 있으며,
 각 모듈은 다음과 같은 명확한 역할을 수행합니다.
 
 | 모듈명                   | 역할                                                                           | 비유         |
@@ -11,11 +11,7 @@
 
 ---
 
-# @remarks
-
-# 하단 문구 추후 한글 번역 예정
-
-# ComposePinInput - A Jetpack Compose PIN Entry Library
+# ComposePinInput - Jetpack Compose PIN 번호 입력 라이브러리
 
 머티리얼 디자인 3원칙(Material Design 3 principles)을 사용하여 Kotlin과 Jetpack Compose로 빌드된
 Android용 `ComposePinInput` 라이브러리에 오신 것을 환영합니다. 이 사용자가 지정 가능한 다목적
@@ -56,6 +52,10 @@ fun Preview() {
 }
 ```
 
+# @remarks
+
+# 하단 문구 추후 한글 번역 예정
+
 ## Input Masking with Asterisks
 
 Here is a version that masks the input, displaying asterisks (*) instead of the actual characters as
@@ -68,7 +68,7 @@ the user types:
 fun Preview() {
     // State to hold the value of the pin
     var pin by remember { mutableStateOf("") }
-    
+
     // Local context to show a toast message
     val context = LocalContext.current
 
