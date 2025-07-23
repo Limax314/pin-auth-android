@@ -17,41 +17,40 @@
 
 # ComposePinInput - A Jetpack Compose PIN Entry Library
 
-Welcome to the `ComposePinInput` library for Android, built with Kotlin and Jetpack Compose using
-Material Design 3 principles. This customizable and versatile library allows you to easily integrate
-pin entry fields into your Compose UI, ideal for pin code, OTP, or password input.
+머티리얼 디자인 3원칙(Material Design 3 principles)을 사용하여 Kotlin과 Jetpack Compose로 빌드된
+Android용 `ComposePinInput` 라이브러리에 오신 것을 환영합니다. 이 사용자가 지정 가능한 다목적
+라이브러리를 사용하면 핀 코드, OTP 또는 비밀번호 입력에 이상적인 핀 입력 필드를 작성 UI에 쉽게
+통합할 수 있습니다.
 
-The GIF below demonstrates the `ComposePinInput` in a live application scenario. Following the GIF,
-you will find the example code that shows how to implement this functionality using Jetpack Compose.
-
+아래 GIF는 실제 어플리케이션을 사용하는 상황에서 `ComposePinInput`을 보여줍니다. GIF를 따라가면
+Jetpack Compose를 사용하여 이 기능을 구현하는 방법을 보여주는 예제 코드를 확인할 수 있습니다.
 
 <img src="pintextfield_1.gif" width="300" />
 
-Using the `ComposePinInput` into your Jetpack Compose layout is straightforward. The example below
-demonstrates a basic setup. In this setup, we define a `Preview` composable function that maintains
-the state of the entered pin. The `ComposePinInput` composable takes the current `pin` value, a
-lambda to handle value changes, and an action to perform when the pin has been completely entered.
-It also allows you to customize the cell size and apply a predefined style, such as a box around
-each digit.
+`ComposePinInput`을 Jetpack Compose 레이아웃에서 사용하는 방법은 직관적입니다. 아래 예시는 기본
+설정을 보여줍니다. 이 설정에서는 입력된 핀의 상태를 유지하는 `Preview` composable 함수를 정의합니다.
+composable 함수인 `ComposePinInput`은 현재 `pin`값, 값 변경을 처리하는 람다, 핀이 완전히 입력됐을 때
+수행할 액션을 취합니다. 또한 셀 크기를 사용자가 지정하고 미리 정의된 스타일(예: 각 숫자 주위 박스)을
+적용할 수 있습니다.
 
 ```kotlin
 @Composable
 fun Preview() {
-    // State to hold the value of the pin
+    // 입력된 핀(PIN) 값을 저장하기 위한 state 변수
     var pin by remember { mutableStateOf("") }
-    // Local context to show a toast message
+
+    // 토스트(사용자에게 잠시 보여지고 사라지는 팝업) 메시지를 표시하기 위한 로컬 문맥 객체
     val context = LocalContext.current
 
     ComposePinInput(
         value = pin,
         onValueChange = {
-            pin = it // Update the state when the value changes
+            pin = it // 값이 변경되었을 때, state 변수 업데이트
         },
-        cellSize = 70.dp, // size (height and width of each Cell
-        onPinEntered = { // when the PIN has been entered get notified
+        cellSize = 70.dp, // 각 셀의 크기(높이, 너비)
+        onPinEntered = { // PIN이 입력된 것을 알릴 때, 
             Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
         },
-
         style = ComposePinInputStyle.BOX
     )
 }
@@ -69,6 +68,7 @@ the user types:
 fun Preview() {
     // State to hold the value of the pin
     var pin by remember { mutableStateOf("") }
+    
     // Local context to show a toast message
     val context = LocalContext.current
 
@@ -124,7 +124,6 @@ fun Preview() {
 You can change the shape of `ComposePinInput` instead of Boxes simple underlines are also supported
 For a subtler look, `ComposePinInput` supports an underline style instead of boxes. The following
 example demonstrates this style:
-
 
 <img src="pintextfield_4.gif" width="300" />
 
@@ -289,7 +288,7 @@ When reporting an issue, try to include as much information as possible about th
 the bug occurred, steps to reproduce the issue, expected behavior, and any other information that
 might help us resolve the problem. Screenshots or code snippets can also be very helpful.
 
-## License
+## 라이센스
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
