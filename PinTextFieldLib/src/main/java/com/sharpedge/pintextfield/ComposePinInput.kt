@@ -132,40 +132,49 @@ public fun ComposePinInput(
         contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxWidth()
     ) {
+        /**
+         * 실제 텍스트 입력을 처리하는 숨겨진 TextField입니다.
+         * 투명하게 처리되어 사용자에게는 보이지 않지만, 키보드 입력 및 포커스 관리를
+         * 담당합니다.
+         */
         BasicTextField(
             value = value,
             onValueChange = { text ->
+                // 입력된 텍스트 길이가 최대 길이를 넘지 않도록 합니다.
                 if (text.length <= maxSize) {
                     onValueChange(text)
 
-                    if (text.length == maxSize) {
-                        onPinEntered?.invoke(text)
-                    }
+                    // 텍스트 길이가 최대 길이에 도달하면 onPinEntered 콜백을 호출합니다.
+                    if (text.length == maxSize) onPinEntered?.invoke(text)
                 }
             },
             keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Done
+                keyboardType = KeyboardType.Number, // 숫자 키보드를 사용합니다.
+                imeAction = ImeAction.Done // 입력 완료 액션을 설정합니다.
             ),
             keyboardActions = KeyboardActions(onDone = {
+                // '완료' 액션시 키보드를 숨깁니다.
                 keyboardController?.hide()
             }),
             modifier = Modifier
-                .alpha(0.01f)
+                .alpha(0.01f) // TextField를 거의 투명하게 만들어 숨깁니다.
                 .onFocusChanged {
+                    // 포커스 상태가 변경될 때 focusedState를 업데이트합니다.
                     focusedState.value = it.isFocused
                 }
-                .focusRequester(focusRequester),
-            textStyle = TextStyle.Default.copy(color = Color.Transparent)
+                .focusRequester(focusRequester), // focusRequester와 연결합니다.
+            textStyle = TextStyle.Default.copy(color = Color.Transparent) // 텍스트 색상을
+            // 투명하게 설정합니다.
         )
 
-        // UI for the Pin
+        // PIN 입력을 시각적으로 표시하는 UI 부분입니다.
         val boxWidth = cellSize
 
         Row(
             horizontalArrangement = Arrangement.spacedBy(cellPadding),
             modifier = Modifier.padding(rowPadding)
         ) {
+            // maxSize만큼 반복하여 각 PIN 셀을 그립니다.
             repeat(maxSize) { index ->
                 val isActiveBox = focusedState.value && (index == value.length)
 
