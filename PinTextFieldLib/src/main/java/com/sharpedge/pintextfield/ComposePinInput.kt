@@ -128,6 +128,11 @@ public fun ComposePinInput(
      */
     val focusRequester = remember { FocusRequester() }
 
+    /**
+     * @remarks
+     * 문법 정리 예정
+     */
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxWidth()
