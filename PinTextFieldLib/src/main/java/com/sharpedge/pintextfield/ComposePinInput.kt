@@ -92,7 +92,7 @@ public fun ComposePinInput(
     isError: Boolean = false,
     onPinEntered: ((String) -> Unit)? = null,
     cellShape: Shape = RoundedCornerShape(4.dp),
-    fontColor: Color = Color.LightGray,
+    fontColor: Color = Color.Red,
     cellBorderColor: Color = Color.Gray,
     rowPadding: Dp = 8.dp,
     cellPadding: Dp = 16.dp,
@@ -106,8 +106,26 @@ public fun ComposePinInput(
     borderThickness: Dp = 2.dp,
     style: ComposePinInputStyle = ComposePinInputStyle.BOX
 ) {
+    /**
+     * 소프트웨어 키보드의 가시성을 제어하는 컨트롤러
+     *
+     * PIN 입력 완료시 키보드를 숨기는데 사용됩니다.
+     */
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    /**
+     * PIN 입력 필드의 포커스 상태를 추적하는 변수
+     *
+     * 현재 입력 중인 셀을 시각적으로 강조하는데 사용됩니다.
+     */
     val focusedState = remember { mutableStateOf(false) }
+
+    /**
+     * 포커스를 요청하는데 사용되는 객체
+     *
+     * 사용자가 PIN 셀을 탭했을 때 숨겨진 BasicTextField에 포커스를
+     * 주기 위해 사용됩니다.
+     */
     val focusRequester = remember { FocusRequester() }
 
     Box(
@@ -146,8 +164,7 @@ public fun ComposePinInput(
 
         Row(
             horizontalArrangement = Arrangement.spacedBy(cellPadding),
-            modifier = Modifier
-                .padding(rowPadding)
+            modifier = Modifier.padding(rowPadding)
         ) {
             repeat(maxSize) { index ->
                 val isActiveBox = focusedState.value && (index == value.length)
