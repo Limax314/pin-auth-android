@@ -5,6 +5,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -13,6 +14,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "PinTextField-Usage"
+rootProject.name = "pin-auth-android"
+
 include(":app")
 include(":PinTextFieldLib")
