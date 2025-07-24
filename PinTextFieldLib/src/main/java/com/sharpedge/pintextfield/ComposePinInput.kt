@@ -176,32 +176,37 @@ public fun ComposePinInput(
         ) {
             // maxSize만큼 반복하여 각 PIN 셀을 그립니다.
             repeat(maxSize) { index ->
+                // 현재 셀이 활성화(포커스) 상태인지 여부를 결정합니다.
+                // 포커스가 있고, 현재 인덱스가 입력된 텍스트의 길이와 같을 때 활성화됩니다.
                 val isActiveBox = focusedState.value && (index == value.length)
 
                 if (style == ComposePinInputStyle.BOX) {
-                    // Box Style Pin field logic starts from here
+                    // 'BOX' 스타일의 PIN 필드 로직입니다.
                     Box(
                         modifier = Modifier
                             .size(cellSize)
                             .background(
+                                // 문자가 입력된 셀과 그렇지 않은 셀의 배경색을 다르게 설정합니다.
                                 color = if (index < value.length) cellColorOnSelect else cellBackgroundColor,
                                 shape = cellShape
                             )
                             .border(
                                 width = cellBorderWidth,
                                 color = when {
-                                    isError -> errorBorderColor
-                                    isActiveBox -> focusedCellBorderColor
-                                    else -> cellBorderColor
+                                    isError -> errorBorderColor // 오류 상태일 때
+                                    isActiveBox -> focusedCellBorderColor // 활성화 상태일 때
+                                    else -> cellBorderColor // 기본 상태일 때
                                 },
                                 shape = cellShape
                             )
                             .clickable(
-                                indication = null, // Disable ripple effect
+                                indication = null, // 클릭시 물결 효과를 제거합니다.
                                 interactionSource = remember { MutableInteractionSource() }
-                            ) { focusRequester.requestFocus() }
+                            ) { focusRequester.requestFocus() } // 클릭시 숨겨진 TextField에 포커스를 요청합니다.
                     ) {
+                        // 현재 인덱스에 해당하는 문자가 있으면 표시합니다.
                         if (index < value.length) {
+                            // 마스킹 문자가 설정되었으면 마스킹 문자를, 아니면 실제 문자를 표시합니다.
                             val displayChar = mask ?: value[index]
 
                             Text(
@@ -213,22 +218,23 @@ public fun ComposePinInput(
                         }
                     }
                 } else {
-                    // Underline style logic here
+                    // 'UNDERLINE' 스타일의 PIN 필드 로직입니다.
                     Box(
                         modifier = Modifier
                             .size(boxWidth, cellSize + borderThickness)
                             .background(color = if (index < value.length) cellColorOnSelect else cellBackgroundColor)
                             .clickable(
-                                indication = null, // Disable ripple effect
+                                indication = null, // 클릭시 물결 효과를 제거합니다.
                                 interactionSource = remember { MutableInteractionSource() }
-                            ) { focusRequester.requestFocus() }
+                            ) { focusRequester.requestFocus() } // 클릭시 숨겨진 TextField에 포커스를 요청합니다.
                     ) {
+                        // Canvas를 사용하여 밑줄을 그립니다.
                         Canvas(modifier = Modifier.fillMaxSize(), onDraw = {
                             drawLine(
                                 color = when {
-                                    isError -> errorBorderColor
-                                    isActiveBox -> focusedCellBorderColor
-                                    else -> cellBorderColor
+                                    isError -> errorBorderColor // 오류 상태일 때
+                                    isActiveBox -> focusedCellBorderColor // 활성화 상태일 때
+                                    else -> cellBorderColor // 기본 상태일 때
                                 },
                                 start = Offset(x = 0f, y = size.height - borderThickness.toPx()),
                                 end = Offset(
@@ -239,6 +245,7 @@ public fun ComposePinInput(
                             )
                         })
 
+                        // 현재 인덱스에 해당하는 문자가 있으면 표시합니다.
                         if (index < value.length) {
                             val displayChar = mask ?: value[index]
                             val lineHeightDp: Dp = with(LocalDensity.current) {
@@ -249,7 +256,7 @@ public fun ComposePinInput(
                                 text = displayChar.toString(),
                                 modifier = Modifier
                                     .align(Alignment.TopCenter)
-                                    .padding(top = (cellSize - lineHeightDp) / 2),
+                                    .padding(top = (cellSize - lineHeightDp) / 2), // 텍스트를 수직 중앙에 가깝게 배치합니다.
                                 fontSize = textFontSize,
                                 color = fontColor
                             )
