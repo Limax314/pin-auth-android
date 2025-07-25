@@ -70,6 +70,12 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/**
+ * 간단한 인사말을 표시하는 컴포저블 함수입니다.
+ *
+ * @param name 인사말에 포함될 이름입니다.
+ * @param modifier 이 컴포저블에 적용할 Modifier입니다.
+ */
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
@@ -78,18 +84,25 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
+/**
+ * `ComposePinInput` 컴포저블의 다양한 사용 예시를 보여주는 미리보기 함수입니다.
+ *
+ * 이 함수는 여러 스타일과 속성을 가진 `ComposePinInput` 필드들을 수직으로 나열하여
+ * 라이브러리의 기능을 시연합니다. 각 필드는 동일한 상태(`pin`)를 공유하며,
+ * PIN 입력이 완료되면 Toast 메시지를 표시합니다.
+ */
 @Composable
 fun PinTextFieldPreview() {
     var pin by remember { mutableStateOf("") }
 
     val context = LocalContext.current
 
-    //Text(text = "Hello world")
+    // Text(text = "Hello world")
 
     Spacer(modifier = Modifier.size(20.dp))
     Spacer(modifier = Modifier.size(20.dp))
 
-// 1
+    // 1
     ComposePinInput(
         value = pin,
         onValueChange = {
@@ -99,12 +112,13 @@ fun PinTextFieldPreview() {
         cellSize = 60.dp,
         onPinEntered = {
             Log.d("Pin_entered", "Pin = $it")
+
             Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
         },
         style = ComposePinInputStyle.BOX
     )
 
-// 2
+    // 2
     ComposePinInput(
         value = pin,
         mask = '*',
@@ -129,11 +143,11 @@ fun PinTextFieldPreview() {
         onValueChange = {
             pin = it
         },
+//        cellSize = 45.dp,
         cellSize = 70.dp,
         onPinEntered = {
             Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
         },
-
         style = ComposePinInputStyle.BOX
     )
 
@@ -155,7 +169,6 @@ fun PinTextFieldPreview() {
 //        style = PinFieldStyle.UNDERLINE
 //    )
 
-
 // 5
 //    PinTextField(
 //        value = pin,
@@ -176,7 +189,6 @@ fun PinTextFieldPreview() {
 //        style = PinFieldStyle.BOX
 //    )
 
-
     // 6
     ComposePinInput(
         value = pin,
@@ -188,14 +200,20 @@ fun PinTextFieldPreview() {
         cellSize = 45.dp,
         onPinEntered = {
             Log.d("Pin_entered", "Pin = $it")
+
             Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
         },
-
         style = ComposePinInputStyle.BOX
     )
-
 }
 
+/**
+ * Android Studio의 디자인 탭에서 `PinTextFieldPreview`의 미리보기를 제공하는
+ * 컴포저블 함수입니다.
+ *
+ * `PinTextFieldUsageTheme`를 적용하여 실제 앱 환경과 유사한 모습으로 UI를
+ * 렌더링합니다.
+ */
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
