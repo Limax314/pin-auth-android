@@ -26,9 +26,34 @@ import com.sharpedge.pintextfield.ComposePinInputStyle
 import com.sharpedge.pintextfield.ComposePinInput
 import com.sharpedge.pintextfieldusage.ui.theme.PinTextFieldUsageTheme
 
+/**
+ * @file MainActivity.kt
+ * @brief `PinTextFieldLib` 라이브러리의 `ComposePinInput` 사용 예제를 보여주는
+ * 메인화면입니다.
+ * @detail
+ * 이 파일은 `ComposePinInput` 컴포저블의 다양한 스타일과 설정을 시연하기 위한
+ * 목적으로 작성되었습니다. 여러 개의 PIN 입력 필드를 수직으로 나열하여 각기 다른
+ * 스타일(BOX, UNDERLINE)과 길이(maxSize)를 테스트합니다.
+ */
+
+/**
+ * 앱의 메인 엑티비티 클래스입니다.
+ *
+ * Jectpack Compose를 사용하여 UI를 구성하며, `PinInputScreen`을 화면에 표시하는
+ * 역할을 합니다.
+ */
 class MainActivity : ComponentActivity() {
+    /**
+     * 엑티비티가 처음 생성될 때 호출되는 콜백 메서드입니다.
+     *
+     * 여기서 `setContent`를 통해 컴포저블 UI의 루트를 설정합니다.
+     *
+     * @param savedInstanceState 이전에 저장된 엑티비티 상태가 포함된 Bundle 객체,
+     * 엑티비티가 새로 시작되는 경우에는 null입니다.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             PinTextFieldUsageTheme {
                 // A surface container using the 'background' color from the theme
@@ -36,11 +61,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
                     Column {
                         PinTextFieldPreview()
                     }
-
                 }
             }
         }
@@ -55,18 +78,16 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-
 @Composable
 fun PinTextFieldPreview() {
     var pin by remember { mutableStateOf("") }
-    val context = LocalContext.current
 
+    val context = LocalContext.current
 
     //Text(text = "Hello world")
 
     Spacer(modifier = Modifier.size(20.dp))
     Spacer(modifier = Modifier.size(20.dp))
-
 
 // 1
     ComposePinInput(
@@ -80,14 +101,13 @@ fun PinTextFieldPreview() {
             Log.d("Pin_entered", "Pin = $it")
             Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
         },
-
         style = ComposePinInputStyle.BOX
     )
 
 // 2
     ComposePinInput(
         value = pin,
-        mask= '*',
+        mask = '*',
         onValueChange = {
             pin = it
         },
@@ -100,11 +120,10 @@ fun PinTextFieldPreview() {
     )
 
 
-
 // 3
     ComposePinInput(
         value = pin,
-        mask= '*',
+        mask = '*',
         cellBorderColor = Color.Blue,
         focusedCellBorderColor = Color.Magenta,
         onValueChange = {

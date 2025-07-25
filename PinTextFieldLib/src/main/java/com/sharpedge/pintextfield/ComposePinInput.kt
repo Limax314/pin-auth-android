@@ -63,7 +63,7 @@ enum class ComposePinInputStyle {
  * @param value 현재 PIN 입력 값
  * @param onValueChange PIN 값이 변경될 때 호출되는 콜백 함수
  * @param maxSize PIN의 최대 길이(기본값: 4)
- * @param mask PIN을 마스키할 문자(null일 경우 실제 문자가 표시)
+ * @param mask PIN을 마스킹할 문자(null일 경우 실제 문자가 표시)
  * @param isError 오류 상태 여부(true일 경우 오류 스타일 적용)
  * @param onPinEntered PIN 입력이 완료되었을 때 호출되는 콜백 함수
  * @param cellShape 각 PIN 입력 셀의 모양, [ComposePinInputStyle.BOX] 스타일에서 사용
@@ -129,10 +129,16 @@ public fun ComposePinInput(
     val focusRequester = remember { FocusRequester() }
 
     /**
-     * @remarks
-     * 문법 정리 예정
+     * PIN 입력 필드의 전체 레이아웃을 감싸는 컨테이너입니다.
+     *
+     * 이 Box는 숨겨진 `BasicTextField`와 사용자가 실제로 보는 PIN 셀들을 중앙에
+     * 정렬시키는 역할을 합니다.
+     * `fillMaxWidth()` 수식어를 통해 부모 컴포저블의 가로 폭을 모두 차지하도록 하여
+     * 내부 요소들이 화면 너비에 맞춰 정렬될 수 있는 기준을 제공합니다.
+     *
+     * @param contentAlignment 내부 콘텐츠(TextField, PIN 셀)를 중앙으로 정렬합니다.
+     * @param modifier 너비를 최대로 확장하는 수식어를 적용합니다.
      */
-
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxWidth()
@@ -141,6 +147,15 @@ public fun ComposePinInput(
          * 실제 텍스트 입력을 처리하는 숨겨진 TextField입니다.
          * 투명하게 처리되어 사용자에게는 보이지 않지만, 키보드 입력 및 포커스 관리를
          * 담당합니다.
+         *
+         * @param value 현재 입력된 PIN 값, `onValueChange`를 통해 업데이트됩니다.
+         * @param onValueChange 사용자가 텍스트를 입력할 때마다 호출되는 콜백입니다. 입력된
+         * 전체 문자열을 파라미터로 받습니다.
+         * @param keyboardOptions 키보드의 종류(숫자)와 입력 완료(IME) 액션을 설정합니다.
+         * @param keyboardActions 키보드의 '완료' 액션 버튼을 눌렀을 때의 동작(키보드 숨김)을
+         * 정의합니다.
+         * @param modifier TextField를 숨기고 포커스 관련 로직을 처리하기 위한 수식어 체인입니다.
+         * @param textStyle 텍스트 색상을 투명하게 만들어 화면에 보이지 않도록 설정합니다.
          */
         BasicTextField(
             value = value,
@@ -153,6 +168,16 @@ public fun ComposePinInput(
                     if (text.length == maxSize) onPinEntered?.invoke(text)
                 }
             },
+            /**
+             * @remarks
+             * 문법 정리 예정
+             */
+            /**
+             * @param keyboardOptions 키보드의 종류와 입력 완료(IME) 액션을 설정합니다.
+             * - `keyboardType = KeyboardType.Number`: 사용자에게 숫자 전용 키보드를 표시합니다.
+             * - `imeAction = ImeAction.Done`: 키보드 오른쪽 하단에 '완료' 버튼을 표시하여,
+             * 입력이 끝났음을 명시적으로 알릴 수 있게 합니다.
+             */
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number, // 숫자 키보드를 사용합니다.
                 imeAction = ImeAction.Done // 입력 완료 액션을 설정합니다.
@@ -168,13 +193,19 @@ public fun ComposePinInput(
                     focusedState.value = it.isFocused
                 }
                 .focusRequester(focusRequester), // focusRequester와 연결합니다.
-            textStyle = TextStyle.Default.copy(color = Color.Transparent) // 텍스트 색상을
-            // 투명하게 설정합니다.
+            textStyle = TextStyle.Default.copy(color = Color.Transparent)
+            //: 텍스트 색상을 투명하게 설정합니다.
         )
 
         // PIN 입력을 시각적으로 표시하는 UI 부분입니다.
         val boxWidth = cellSize
 
+        /**
+         * @param horizontalArrangement 자식 요소(PIN 셀)들을 수평으로 정렬하는 방식을 정의합니다.
+         * - `Arrangement.spaceBy(cellPadding)`: 각 셀 사이에 `cellPadding`만큼의 고정된 간격을
+         * 둡니다.
+         * @param modifier 전체 Row에 대한 패딩을 적용합니다.
+         */
         Row(
             horizontalArrangement = Arrangement.spacedBy(cellPadding),
             modifier = Modifier.padding(rowPadding)
@@ -192,7 +223,8 @@ public fun ComposePinInput(
                             .size(cellSize)
                             .background(
                                 // 문자가 입력된 셀과 그렇지 않은 셀의 배경색을 다르게 설정합니다.
-                                color = if (index < value.length) cellColorOnSelect else cellBackgroundColor,
+                                color = if (index < value.length) cellColorOnSelect
+                                else cellBackgroundColor,
                                 shape = cellShape
                             )
                             .border(
@@ -207,7 +239,8 @@ public fun ComposePinInput(
                             .clickable(
                                 indication = null, // 클릭시 물결 효과를 제거합니다.
                                 interactionSource = remember { MutableInteractionSource() }
-                            ) { focusRequester.requestFocus() } // 클릭시 숨겨진 TextField에 포커스를 요청합니다.
+                            ) { focusRequester.requestFocus() }
+                        //: 클릭시 숨겨진 TextField에 포커스를 요청합니다.
                     ) {
                         // 현재 인덱스에 해당하는 문자가 있으면 표시합니다.
                         if (index < value.length) {
@@ -227,28 +260,38 @@ public fun ComposePinInput(
                     Box(
                         modifier = Modifier
                             .size(boxWidth, cellSize + borderThickness)
-                            .background(color = if (index < value.length) cellColorOnSelect else cellBackgroundColor)
+                            .background(
+                                color = if (index < value.length) cellColorOnSelect
+                                else cellBackgroundColor
+                            )
                             .clickable(
                                 indication = null, // 클릭시 물결 효과를 제거합니다.
                                 interactionSource = remember { MutableInteractionSource() }
-                            ) { focusRequester.requestFocus() } // 클릭시 숨겨진 TextField에 포커스를 요청합니다.
+                            ) { focusRequester.requestFocus() }
+                        //: 클릭시 숨겨진 TextField에 포커스를 요청합니다.
                     ) {
                         // Canvas를 사용하여 밑줄을 그립니다.
-                        Canvas(modifier = Modifier.fillMaxSize(), onDraw = {
-                            drawLine(
-                                color = when {
-                                    isError -> errorBorderColor // 오류 상태일 때
-                                    isActiveBox -> focusedCellBorderColor // 활성화 상태일 때
-                                    else -> cellBorderColor // 기본 상태일 때
-                                },
-                                start = Offset(x = 0f, y = size.height - borderThickness.toPx()),
-                                end = Offset(
-                                    x = size.width,
-                                    y = size.height - borderThickness.toPx()
-                                ),
-                                strokeWidth = borderThickness.toPx()
-                            )
-                        })
+                        Canvas(
+                            modifier = Modifier.fillMaxSize(),
+                            onDraw = {
+                                drawLine(
+                                    color = when {
+                                        isError -> errorBorderColor // 오류 상태일 때
+                                        isActiveBox -> focusedCellBorderColor // 활성화 상태일 때
+                                        else -> cellBorderColor // 기본 상태일 때
+                                    },
+                                    start = Offset(
+                                        x = 0f,
+                                        y = size.height - borderThickness.toPx()
+                                    ),
+                                    end = Offset(
+                                        x = size.width,
+                                        y = size.height - borderThickness.toPx()
+                                    ),
+                                    strokeWidth = borderThickness.toPx()
+                                )
+                            }
+                        )
 
                         // 현재 인덱스에 해당하는 문자가 있으면 표시합니다.
                         if (index < value.length) {
@@ -261,7 +304,8 @@ public fun ComposePinInput(
                                 text = displayChar.toString(),
                                 modifier = Modifier
                                     .align(Alignment.TopCenter)
-                                    .padding(top = (cellSize - lineHeightDp) / 2), // 텍스트를 수직 중앙에 가깝게 배치합니다.
+                                    .padding(top = (cellSize - lineHeightDp) / 2),
+                                //: 텍스트를 수직 중앙에 가깝게 배치합니다.
                                 fontSize = textFontSize,
                                 color = fontColor
                             )
