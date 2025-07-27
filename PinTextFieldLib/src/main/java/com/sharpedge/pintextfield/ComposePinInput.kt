@@ -18,6 +18,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -92,7 +93,7 @@ public fun ComposePinInput(
     isError: Boolean = false,
     onPinEntered: ((String) -> Unit)? = null,
     cellShape: Shape = RoundedCornerShape(4.dp),
-    fontColor: Color = Color.Red,
+    fontColor: Color = Color.Blue,
     cellBorderColor: Color = Color.Gray,
     rowPadding: Dp = 8.dp,
     cellPadding: Dp = 16.dp,
@@ -127,6 +128,16 @@ public fun ComposePinInput(
      * 주기 위해 사용됩니다.
      */
     val focusRequester = remember { FocusRequester() }
+
+    /**
+     * @remarks
+     * 수정 예정
+     */
+    LaunchedEffect(focusRequester) {
+        focusRequester.requestFocus()
+
+        keyboardController?.show()
+    }
 
     /**
      * PIN 입력 필드의 전체 레이아웃을 감싸는 컨테이너입니다.
