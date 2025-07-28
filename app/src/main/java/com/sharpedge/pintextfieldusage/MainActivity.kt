@@ -27,6 +27,24 @@ import com.sharpedge.pintextfield.ComposePinInput
 import com.sharpedge.pintextfieldusage.ui.theme.PinTextFieldUsageTheme
 
 /**
+ * @remarks
+ * 핀번호 성공/실패 분기 기능 추가 예정
+ * 1. MainActivity에 인증 성공 여부를 저장하는 Boolean 타입의 상태 변수(예: isPinCorrect)를
+ * 추가합니다.
+ *
+ * 2. setContent 블록 냉에서 isPinCorrect 상태에 따라 조건부로 화면을 보여줍니다.
+ *  - false일 경우: PinInputScreen 표시
+ *  - true일 경우: SuccessScreen 표시
+ *
+ * 3. PinInputScreen은 인증 성공시 호출할 람다 함수(예: onPinCorrect)를 파라미터로 받습니다.
+ *
+ * 4. 사용자가 올바른 PIN(111111)을 입력하면, PinInputScreen은 onPinCorrect 함수를 호출하여
+ * isPinCorrect 상태를 true로 변경합니다.
+ *
+ * 5. 잘못된 PIN을 입력하면 이전과 같이 Toast 메시지를 표시합니다.
+ */
+
+/**
  * @file MainActivity.kt
  * @brief `PinTextFieldLib` 라이브러리의 `ComposePinInput` 사용 예제를 보여주는
  * 메인화면입니다.
@@ -102,38 +120,6 @@ fun PinTextFieldPreview() {
     Spacer(modifier = Modifier.size(20.dp))
     Spacer(modifier = Modifier.size(20.dp))
 
-    // 1
-//    ComposePinInput(
-//        value = pin,
-//        onValueChange = {
-//            pin = it
-//        },
-//        cellPadding = 16.dp,
-//        cellSize = 60.dp,
-//        onPinEntered = {
-//            Log.d("Pin_entered", "Pin = $it")
-//
-//            Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
-//        },
-//        style = ComposePinInputStyle.BOX
-//    )
-
-    // 2
-//    ComposePinInput(
-//        value = pin,
-//        mask = '*',
-//        onValueChange = {
-//            pin = it
-//        },
-//        cellSize = 70.dp,
-//        onPinEntered = {
-//            Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
-//        },
-//
-//        style = ComposePinInputStyle.BOX
-//    )
-
-    // 3
     ComposePinInput(
         value = pin,
         mask = '⚫',
@@ -149,23 +135,6 @@ fun PinTextFieldPreview() {
         },
         style = ComposePinInputStyle.BOX
     )
-
-//    // 6
-//    ComposePinInput(
-//        value = pin,
-//        onValueChange = {
-//            pin = it
-//        },
-//        mask = '⚫',
-//        maxSize = 6,
-//        cellSize = 45.dp,
-//        onPinEntered = {
-//            Log.d("Pin_entered", "Pin = $it")
-//
-//            Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
-//        },
-//        style = ComposePinInputStyle.BOX
-//    )
 }
 
 /**
