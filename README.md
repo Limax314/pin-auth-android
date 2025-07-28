@@ -70,22 +70,21 @@ fun Preview() {
 }
 ```
 
-# @remarks
+## 별표로 입력 가려짐
 
-# 하단부터 수정 예정
-
-## Input Masking with Asterisks
-
-Here is a version that masks the input, displaying asterisks (*) instead of the actual characters as
-the user types:
+다음은 사용자가 입력하는 실제 문자 대신 별표(*)를 표시하여 입력을 마스킹하는 버전입니다.
 
 <img src="pintextfield_2.gif" width="300" />
 
 ```kotlin
 @Composable
 fun Preview() {
-    // State to hold the value of the pin
+    // 입력된 핀(PIN) 값을 저장하기 위한 state 변수
     var pin by remember { mutableStateOf("") }
+
+    # @remarks
+
+    # 하단부터 수정 예정
 
     // Local context to show a toast message
     val context = LocalContext.current
