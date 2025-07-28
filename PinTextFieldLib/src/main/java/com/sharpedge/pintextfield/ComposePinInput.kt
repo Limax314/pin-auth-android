@@ -201,12 +201,6 @@ public fun ComposePinInput(
             modifier = Modifier
                 .alpha(0.01f) // TextField를 거의 투명하게 만들어 숨깁니다.
                 .onFocusChanged {
-                    /**
-                     * @remarks
-                     * 키보드 버그 수정 예정
-                     */
-                    if (it.isFocused) keyboardController?.show()
-
                     // 포커스 상태가 변경될 때 focusedState를 업데이트합니다.
                     focusedState.value = it.isFocused
                 }
@@ -257,8 +251,13 @@ public fun ComposePinInput(
                             .clickable(
                                 indication = null, // 클릭시 물결 효과를 제거합니다.
                                 interactionSource = remember { MutableInteractionSource() }
-                            ) { focusRequester.requestFocus() }
-                        //: 클릭시 숨겨진 TextField에 포커스를 요청합니다.
+                            ) {
+                                // 클릭시 숨겨진 TextField에 포커스를 요청합니다.
+                                focusRequester.requestFocus()
+
+                                // 키보드를 명시적으로 표시
+                                keyboardController?.show()
+                            }
                     ) {
                         // 현재 인덱스에 해당하는 문자가 있으면 표시합니다.
                         if (index < value.length) {
@@ -285,8 +284,13 @@ public fun ComposePinInput(
                             .clickable(
                                 indication = null, // 클릭시 물결 효과를 제거합니다.
                                 interactionSource = remember { MutableInteractionSource() }
-                            ) { focusRequester.requestFocus() }
-                        //: 클릭시 숨겨진 TextField에 포커스를 요청합니다.
+                            ) {
+                                // 클릭시 숨겨진 TextField에 포커스를 요청합니다.
+                                focusRequester.requestFocus()
+
+                                // 키보드를 명시적으로 표시
+                                keyboardController?.show()
+                            }
                     ) {
                         // Canvas를 사용하여 밑줄을 그립니다.
                         Canvas(
