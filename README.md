@@ -29,6 +29,32 @@
 
 ---
 
+# 💡 Android Studio를 통한 개발시 주의사항
+
+## 에뮬레이터 캐시 문제 해결하기
+
+에뮬레이터에서 코드를 수정해도 변경사항이 적용되지 않는 경우가 있습니다. 이는 에뮬레이터의 캐시나 스냅샷 기능 때문에 발생할 수 있으며, 다음과 같은 방법으로 해결할 수 있습니다.
+
+1. Cold Boot(콜드 부팅)
+
+    에뮬레이터를 완전히 종료했다가 다시 시작하여 캐시를 초기화합니다. 가장 먼저 시도해 볼 간단하고 효과적인 방법입니다.
+
+   - 방법: Device Manager -> 해당 에뮬레이터의 `...` 메뉴 -> Cold Boot Now
+
+2. Wipe Data(데이터 삭제)
+
+    에뮬레이터의 모든 데이터를 삭제하여 초기 상태로 되돌립니다. 로그인 정보 등 모든 데이터가 사라지므로 주의가 필요합니다.
+
+   - 방법: Device Manager -> 해당 에뮬레이터의 `...` 메뉴 -> Wipe Data
+
+3. Clean and Rebuild Project(프로젝트 클린 및 재빌드)
+
+    Gradle 빌드 캐시를 삭제하고 프로젝트를 다시 빌드합니다. 코드 변경사항이 제대로 반영되지 않을 때 유용합니다.
+
+   - 방법: Android Studio 메뉴 -> Build Clean Project 후 Rebuild Project
+
+---
+
 # ComposePinInput - Jetpack Compose PIN 번호 입력 라이브러리
 
 머티리얼 디자인 3원칙(Material Design 3 principles)을 사용하여 Kotlin과 Jetpack Compose로 빌드된
@@ -221,6 +247,8 @@ fun Preview() {
 }
 ```
 
+---
+
 # 사용법
 
 라이브러리를 사용하려면 다음 단계를 따르세요.
@@ -228,10 +256,6 @@ fun Preview() {
 ## 설치
 
 ### Gradle 설정
-
-# @remarks
-
-# 하단부터 수정 예정
 
 1. **아직 추가하지 않은 경우, 빌드 파일에 JitPack 저장소를 추가합니다.**
 
@@ -274,31 +298,24 @@ fun Preview() {
 
 현재 버전을 기준으로 라이브러리에는 다음과 같은 알려진 제약 사항이 있습니다.:
 
-- **Theme Support**: The `ComposePinInput` component does not currently support centralized theme
-  management. This means it does not automatically adopt colors, fonts, and other styling properties
-  from the app's theme.
+# @remarks
 
-    - *Impact*: All parameters for color, font size, and other styling must be explicitly passed to
-      the component; it will not inherit these from the app's theme settings.
-    - *Status*: This is a known design limitation in the current release. Future versions may
-      include improved theme support.
+# 하단부터 수정 예정
 
-We welcome contributions and suggestions on how to enhance theming capabilities. If you have ideas
-or solutions, please share them by opening
-an [issue](https://github.com/sharp-edge/ComposePinInput/issues) or submitting a pull request.
+- **테마 지원**: `ComposePinInput` 컴포넌트는 중앙집중식 테마 관리를 지원하지 않습니다. 즉, 앱 테마의 색상, 글꼴 및 기타 스타일 속성을 자동으로 채택하지 않습니다.
 
-Please report any new issues you encounter, and I will aim to address them in subsequent releases.
+    - *영향*: 색상, 글꼴 크기 및 기타 스타일링에 대한 모든 매개변수는 앱의 테마 설정에 상속되지 않고 컴포넌트에 명시적으로 전달되어야 합니다.
+    - *상태*: 이는 현재 릴리스에서 얄려진 디자인 제한사항입니다. 향후 버전에서는 개선된 테마 지원이 포함될 수 있습니다.
+
+테마 기능을 개선하는 방법에 대한 기여와 제안을 환영합니다. 아이디어나 해결책이 있다면 [issue](https://github.com/sharp-edge/ComposePinInput/issues)를 열거나 Pull requests를 제출하여 공유해주세요.
+
+새로운 문제가 발생하여 보고해주시면 다음 릴리즈에서 이를 해결하도록 노력하겠습니다.
 
 ## 버그&이슈들
 
-If you encounter any bugs or issues with this library, please report them in
-the [Issues](https://github.com/sharp-edge/ComposePinInput/issues) section of the repository. Before
-creating a new issue, please check to see if a similar issue has already been reported by another
-user.
+이 [라이브러리](https://github.com/sharp-edge/ComposePinInput.git)에서 버그나 문제가 발견되면 저장소의 [Issues](https://github.com/sharp-edge/ComposePinInput/issues) 부분에서 보고해주세요. 새 이슈를 만들기 전에 다른 사용자가 이미 비슷한 문제를 보고했는지 확인하세요.
 
-When reporting an issue, try to include as much information as possible about the environment where
-the bug occurred, steps to reproduce the issue, expected behavior, and any other information that
-might help us resolve the problem. Screenshots or code snippets can also be very helpful.
+문제를 보고할 때는 버그가 발생한 환경, 문제를 재현하는 단계, 예상 동작, 기타 문제 해결에 도움이 될 수 있는 정보를 최대한 많이 포함해주세요. 스크린샷이나 코드 조각(snnippet)도 큰 도움이 될 수 있습니다.
 
 ## 라이센스
 
