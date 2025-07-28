@@ -1,4 +1,4 @@
-## Android 프로젝트 구조
+# Android 프로젝트 구조
 
 이 프로젝트는 안드로이드의 **멀티 모듈 아키텍처(Multi-module Architecture)** 를 따르고 있으며,
 각 모듈은 다음과 같은 명확한 역할을 수행합니다.
@@ -82,11 +82,7 @@ fun Preview() {
     // 입력된 핀(PIN) 값을 저장하기 위한 state 변수
     var pin by remember { mutableStateOf("") }
 
-    # @remarks
-
-    # 하단부터 수정 예정
-
-    // Local context to show a toast message
+    // 토스트(사용자에게 잠시 보여지고 사라지는 팝업) 메시지를 표시하기 위한 로컬 문맥 객체
     val context = LocalContext.current
 
     ComposePinInput(
@@ -105,10 +101,9 @@ fun Preview() {
 }
 ```
 
-## Custom Cell Border Colors
+## 사용자 지정 셀 테두리 색상
 
-Enhance the visual appeal of your `ComposePinInput` by customizing the cell border colors, including
-the color change when a cell is focused:
+사용자 지정 셀 테두리 색상을 입혀 `ComposePinInput`의 시각적 매력을 높이고, 셀 클릭시(focus) 색상이 변경되는 등의 기능을 추가할 수 있습니다.
 
 <img src="pintextfield_3.gif" width="300" />
 
@@ -121,8 +116,8 @@ fun Preview() {
     ComposePinInput(
         value = pin,
         mask = '*',
-        cellBorderColor = Color.Blue, // Just pass the color here for the cell/box border
-        focusedCellBorderColor = Color.Magenta, // when the box is focused it's color can be customized here
+        cellBorderColor = Color.Blue, // 셀/박스 테두리의 색상을 입력하기만 하면 됩니다.
+        focusedCellBorderColor = Color.Magenta, // 박스를 클릭했을 때, 여기서 색상을 지정할 수 있습니다.
         onValueChange = {
             pin = it
         },
@@ -130,17 +125,14 @@ fun Preview() {
         onPinEntered = {
             Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
         },
-
         style = ComposePinInputStyle.BOX
     )
 }
 ```
 
-# Underline Style Customization
+## 사용자 지정 밑줄 스타일
 
-You can change the shape of `ComposePinInput` instead of Boxes simple underlines are also supported
-For a subtler look, `ComposePinInput` supports an underline style instead of boxes. The following
-example demonstrates this style:
+박스들 대신 `ComposePinInput`의 모양 변경 가능하며 간단한 밑줄도 지원됩니다. 좀 더 미묘한 모양을 위해 `ComposePinInput`은 상자 대신 밑줄 스타일을 지원합니다. 다음 예시에서는 이 스타일을 보여줍니다.
 
 <img src="pintextfield_4.gif" width="300" />
 
@@ -150,12 +142,12 @@ fun Preview() {
     var pin by remember { mutableStateOf("") }
     val context = LocalContext.current
 
-    // Underline style with custom border colors
+    // 사용자 지정 색상이 적용된 밑줄 스타일
     ComposePinInput(
         value = pin,
         mask = '*',
-        cellBorderColor = Color.DarkGray, // Just pass the color here for the cell/box border
-        focusedCellBorderColor = Color.Blue, // when the box is focused it's color can be customized here
+        cellBorderColor = Color.DarkGray, // 셀/박스 테두리의 색상을 입력하기만 하면 됩니다.
+        focusedCellBorderColor = Color.Blue, // 박스를 클릭했을 때, 여기서 색상을 지정할 수 있습니다.
         onValueChange = {
             pin = it
         },
@@ -163,15 +155,14 @@ fun Preview() {
         onPinEntered = {
             Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
         },
-
-        style = ComposePinInputStyle.UNDERLINE // Apply the underline style
+        style = ComposePinInputStyle.UNDERLINE // 밑줄 스타일 적용
     )
 }
 ```
 
-# Dynamic Background and Font Colors
+## 동적인 배경 및 글꼴 색상
 
-Customize the on focus background color and font color
+클릭된 배경색과 글꼴 색 사용자 지정
 
 <img src="pintextfield_5.gif" width="300" />
 
@@ -181,14 +172,14 @@ fun Preview() {
     var pin by remember { mutableStateOf("") }
     val context = LocalContext.current
 
-    // Box style with dynamic background and font colors
+    // 동적인 배경 및 글꼴 색상이 적용된 박스 스타일
     ComposePinInput(
         value = pin,
         mask = '*',
-        cellBorderColor = Color.DarkGray, // Just pass the color here for the cell/box border
-        focusedCellBorderColor = Color.Blue, // when the box is focused it's color can be customized here
-        cellColorOnSelect = Color.Cyan // This will change the color once focus is on the cell
-                fontColor = Color . Blue, // This is how font color can be changed
+        cellBorderColor = Color.DarkGray, // 셀/박스 테두리의 색상을 입력하기만 하면 됩니다.
+        focusedCellBorderColor = Color.Blue, // 박스를 클릭했을 때, 여기서 색상을 지정할 수 있습니다.
+        cellColorOnSelect = Color.Cyan, // 셀을 클릭하면 해당 색상으로 변경됩니다.
+                fontColor = Color.Blue, // 글꼴 색상이 해당 색상으로 변경됩니다.
         onValueChange = {
             pin = it
         },
@@ -196,16 +187,14 @@ fun Preview() {
         onPinEntered = {
             Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
         },
-
-        style = ComposePinInputStyle.BOX // // Retaining the box style
+        style = ComposePinInputStyle.BOX // 박스 스타일 유지
     )
 }
 ```
 
-# Flexibility in Number of Cells and Mask Character
+## 셀 개수 및 문자 가리기의 유연성
 
-`ComposePinInput` is highly flexible, allowing you to define the number of cells and choose a custom
-mask character, as illustrated below:
+`ComposePinInput`은 매우 유연하여 아래 그림과 같이 셀 수를 정의하고 사용자 지정 가림용 문자를 선택할 수 있습니다.
 
 <img src="pintextfield_6.gif" width="300" />
 
@@ -215,35 +204,38 @@ fun Preview() {
     var pin by remember { mutableStateOf("") }
     val context = LocalContext.current
 
-    // Custom number of cells and mask character
+    // 사용자 지정 셀 개수 및 가림용 문자
     ComposePinInput(
         value = pin,
-        mask = '⚫', // // Choose any character as the mask
-        maxSize = 6, // // Define the number of cells, 4 are default if this property is not used
-        cellSize = 45.dp, // default size is 50.dp, this property is optional
+        mask = '⚫', // 가림용 문자로 아무거나 선택하세요
+        maxSize = 6, // 셀 수를 정의합니다. 이 속성을 사용하지 않는 경우 기본값은 4개입니다.
+        cellSize = 45.dp, // 기본 크기는 50.dp이며 이 속성은 선택사항입니다.
         onValueChange = {
             pin = it
         },
         onPinEntered = {
             Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
         },
-
-        style = ComposePinInputStyle.BOX // // Using the box style
+        style = ComposePinInputStyle.BOX // 박스 스타일 사용
     )
 }
 ```
 
-# How to Use
+# 사용법
 
-To use [Library Name], follow these steps:
+라이브러리를 사용하려면 다음 단계를 따르세요.
 
-## Installation
+## 설치
 
-### Gradle Setup
+### Gradle 설정
 
-1. **Add the JitPack repository to your build file, if not already added**
+# @remarks
 
-   Add the following in your root `build.gradle` at the end of repositories:
+# 하단부터 수정 예정
+
+1. **아직 추가하지 않은 경우, 빌드 파일에 JitPack 저장소를 추가합니다.**
+
+   저장소 끝에 있는 루트 `build.gradle`에 다음을 추가합니다.:
 
    ```gradle
    allprojects {
@@ -253,7 +245,8 @@ To use [Library Name], follow these steps:
      }
    }
    ```
-   **Or if you're using build.gradle.kts:**
+
+   **또는 `build.gradle.kts`를 사용하는 경우:**
    ```gradle
    allprojects {
       repositories {
@@ -262,22 +255,24 @@ To use [Library Name], follow these steps:
       }
     }
    ```
-2. **Add the dependency**
+
+2. **의존성 추가**
    ```gradle
    dependencies {
       implementation 'com.github.sharp-edge:ComposePinInput:1.0.3'
     }
    ```
-   **for build.gradle.kts:**
+
+   **`build.gradle.kts`의 경우:**
    ```gradle
    dependencies {
       implementation ("com.github.sharp-edge:ComposePinInput:1.0.3")
     }
    ```
 
-## Known Issues
+## 알려진 이슈들
 
-As of the current version, the library has the following known limitation:
+현재 버전을 기준으로 라이브러리에는 다음과 같은 알려진 제약 사항이 있습니다.:
 
 - **Theme Support**: The `ComposePinInput` component does not currently support centralized theme
   management. This means it does not automatically adopt colors, fonts, and other styling properties
@@ -294,7 +289,7 @@ an [issue](https://github.com/sharp-edge/ComposePinInput/issues) or submitting a
 
 Please report any new issues you encounter, and I will aim to address them in subsequent releases.
 
-## Bugs and Issues
+## 버그&이슈들
 
 If you encounter any bugs or issues with this library, please report them in
 the [Issues](https://github.com/sharp-edge/ComposePinInput/issues) section of the repository. Before
@@ -307,6 +302,4 @@ might help us resolve the problem. Screenshots or code snippets can also be very
 
 ## 라이센스
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
-
-   
+이 프로젝트는 Apache License 2.0에 따라 라이센스가 부여됐습니다. - 세부사항은 [LICENSE](LICENSE) 파일을 참고하세요.
