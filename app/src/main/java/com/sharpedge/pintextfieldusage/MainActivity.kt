@@ -103,108 +103,69 @@ fun PinTextFieldPreview() {
     Spacer(modifier = Modifier.size(20.dp))
 
     // 1
-    ComposePinInput(
-        value = pin,
-        onValueChange = {
-            pin = it
-        },
-        cellPadding = 16.dp,
-        cellSize = 60.dp,
-        onPinEntered = {
-            Log.d("Pin_entered", "Pin = $it")
-
-            Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
-        },
-        style = ComposePinInputStyle.BOX
-    )
+//    ComposePinInput(
+//        value = pin,
+//        onValueChange = {
+//            pin = it
+//        },
+//        cellPadding = 16.dp,
+//        cellSize = 60.dp,
+//        onPinEntered = {
+//            Log.d("Pin_entered", "Pin = $it")
+//
+//            Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
+//        },
+//        style = ComposePinInputStyle.BOX
+//    )
 
     // 2
+//    ComposePinInput(
+//        value = pin,
+//        mask = '*',
+//        onValueChange = {
+//            pin = it
+//        },
+//        cellSize = 70.dp,
+//        onPinEntered = {
+//            Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
+//        },
+//
+//        style = ComposePinInputStyle.BOX
+//    )
+
+    // 3
     ComposePinInput(
         value = pin,
-        mask = '*',
-        onValueChange = {
-            pin = it
-        },
-        cellSize = 70.dp,
-        onPinEntered = {
-            Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
-        },
-
-        style = ComposePinInputStyle.BOX
-    )
-
-
-// 3
-    ComposePinInput(
-        value = pin,
-        mask = '*',
+        mask = '⚫',
+        maxSize = 6,
         cellBorderColor = Color.Blue,
         focusedCellBorderColor = Color.Magenta,
         onValueChange = {
             pin = it
         },
-//        cellSize = 45.dp,
-        cellSize = 70.dp,
-        onPinEntered = {
-            Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
-        },
-        style = ComposePinInputStyle.BOX
-    )
-
-// 4
-//    PinTextField(
-//        value = pin,
-//        mask= '*',
-//        cellBorderColor = Color.DarkGray,
-//        focusedCellBorderColor = Color.Blue,
-//        onValueChange = {
-//            pin = it
-//        },
-//        //boxHeight = 70.dp,
-//        onPinEntered = {
-//            Log.d("Pin_entered", "Pin = $it")
-//            Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
-//        },
-//
-//        style = PinFieldStyle.UNDERLINE
-//    )
-
-// 5
-//    PinTextField(
-//        value = pin,
-//        mask= '*',
-//        cellBorderColor = Color.DarkGray,
-//        focusedCellBorderColor = Color.Blue,
-//        cellColorOnSelect = Color.Cyan,
-//        fontColor = Color.Blue,
-//        onValueChange = {
-//            pin = it
-//        },
-//        //boxHeight = 70.dp,
-//        onPinEntered = {
-//            Log.d("Pin_entered", "Pin = $it")
-//            Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
-//        },
-//
-//        style = PinFieldStyle.BOX
-//    )
-
-    // 6
-    ComposePinInput(
-        value = pin,
-        onValueChange = {
-            pin = it
-        },
-        mask = '⚫',
-        maxSize = 6,
         cellSize = 45.dp,
         onPinEntered = {
-            Log.d("Pin_entered", "Pin = $it")
-
             Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
         },
         style = ComposePinInputStyle.BOX
     )
+
+//    // 6
+//    ComposePinInput(
+//        value = pin,
+//        onValueChange = {
+//            pin = it
+//        },
+//        mask = '⚫',
+//        maxSize = 6,
+//        cellSize = 45.dp,
+//        onPinEntered = {
+//            Log.d("Pin_entered", "Pin = $it")
+//
+//            Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
+//        },
+//        style = ComposePinInputStyle.BOX
+//    )
 }
 
 /**
