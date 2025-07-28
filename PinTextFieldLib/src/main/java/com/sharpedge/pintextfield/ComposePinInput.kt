@@ -136,7 +136,8 @@ public fun ComposePinInput(
     LaunchedEffect(focusRequester) {
         focusRequester.requestFocus()
 
-        keyboardController?.show()
+        // 키보드 표시 로직 `onFocusChanged`에서 일괄 처리
+        // keyboardController?.show()
     }
 
     /**
@@ -200,6 +201,12 @@ public fun ComposePinInput(
             modifier = Modifier
                 .alpha(0.01f) // TextField를 거의 투명하게 만들어 숨깁니다.
                 .onFocusChanged {
+                    /**
+                     * @remarks
+                     * 키보드 버그 수정 예정
+                     */
+                    if (it.isFocused) keyboardController?.show()
+
                     // 포커스 상태가 변경될 때 focusedState를 업데이트합니다.
                     focusedState.value = it.isFocused
                 }
