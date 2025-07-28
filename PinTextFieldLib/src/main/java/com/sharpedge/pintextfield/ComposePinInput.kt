@@ -129,10 +129,6 @@ public fun ComposePinInput(
      */
     val focusRequester = remember { FocusRequester() }
 
-    /**
-     * @remarks
-     * 수정 예정
-     */
     LaunchedEffect(focusRequester) {
         focusRequester.requestFocus()
 
