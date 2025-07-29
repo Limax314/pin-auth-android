@@ -98,7 +98,7 @@
 
 ### 방법 A: Android Studio 사용(권장)
 
-1. Android Studio 상단 메뉴에서 `Build` > `Build Bundle(s) / APK(s)` > `Build APK(s)`를 차례로 클릭합니다.
+1. Android Studio 상단 메뉴에서 `Build` > `Generate App Bundles or APKs` > `Generate APKs`를 차례로 클릭합니다.
 2. 빌드가 완료되면 오른쪽 하단에 알림이 표시됩니다. `locate` 링크를 클릭하면 `app-debug.apk` 파일이 있는 폴더가 열립니다.
      * **기본 경로**: `app/build/outputs/apk/debug/app-debug.apk`
 
