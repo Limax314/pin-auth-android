@@ -1,7 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  @file misc.xml
+  @brief IntelliJ IDEA / Android Studio 프로젝트의 기타(Miscellaneous) 설정 파일입니다.
+  @detail
+    이 파일은 IntelliJ 계열 IDE(Android Studio 포함)가 프로젝트 관련 설정을 저장하기 위해
+    자동으로 생성하고 관리하는 파일 중 하나입니다.
+    이름(misc)에서 알 수 있듯이, `compiler.xml`(컴파일러 설정)이나 `vcs.xml`(버전 관리 설정)처럼
+    명확한 용도가 정해진 다른 파일에 속하지 않는 '기타 잡다한 설정'들을 보관하는 역할을 합니다.
+
+    주로 포함되는 정보는 다음과 같습니다.:
+    - 프로젝트 SDK 정보: 이 프로젝트가 어떤 버전의 Java(JDK)를 사용하는지에 대한 경로와 정보.
+    - 프로젝트 언어 레벨: 프로젝트가 사용하는 Java 언어의 버전(예: Java 8).
+    - 프로젝트 타입: 이 프로젝트가 안드로이드 애플리케이션인지, 라이브러리 모듈인지 등의 유형.
+    - 특정 프레임워크나 기술에 대한 일부 설정.
+  @note
+    이 파일은 개발자 개인의 컴퓨터 환경(로컬 환경)에 따라 내용이 달라질 수 있으므로,
+    일반적으로 .gitignore에 추가하여 버전 관리 시스템(Git)에 커밋하지 않는 것이 권장됩니다.
+-->
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="jbr-21" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" default="true" languageLevel="JDK_21"
+      project-jdk-name="jbr-21" project-jdk-type="JavaSDK" version="2">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
