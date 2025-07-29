@@ -1,14 +1,12 @@
 package com.sharpedge.pintextfieldusage
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -17,10 +15,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sharpedge.pintextfield.ComposePinInputStyle
 import com.sharpedge.pintextfield.ComposePinInput
@@ -28,20 +26,7 @@ import com.sharpedge.pintextfieldusage.ui.theme.PinTextFieldUsageTheme
 
 /**
  * @remarks
- * 핀번호 성공/실패 분기 기능 추가 예정
- * 1. MainActivity에 인증 성공 여부를 저장하는 Boolean 타입의 상태 변수(예: isPinCorrect)를
- * 추가합니다.
- *
- * 2. setContent 블록 냉에서 isPinCorrect 상태에 따라 조건부로 화면을 보여줍니다.
- *  - false일 경우: PinInputScreen 표시
- *  - true일 경우: SuccessScreen 표시
- *
- * 3. PinInputScreen은 인증 성공시 호출할 람다 함수(예: onPinCorrect)를 파라미터로 받습니다.
- *
- * 4. 사용자가 올바른 PIN(111111)을 입력하면, PinInputScreen은 onPinCorrect 함수를 호출하여
- * isPinCorrect 상태를 true로 변경합니다.
- *
- * 5. 잘못된 PIN을 입력하면 이전과 같이 Toast 메시지를 표시합니다.
+ * KDoc 주석 추가 예정
  */
 
 /**
@@ -79,9 +64,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Column {
-                        PinTextFieldPreview()
-                    }
+                    PinAuthScreen()
                 }
             }
         }
@@ -89,65 +72,71 @@ class MainActivity : ComponentActivity() {
 }
 
 /**
- * 간단한 인사말을 표시하는 컴포저블 함수입니다.
+ * PIN 인증 상태에 따라 적절한 화면을 표시하는 컴포저블 함수입니다.
  *
- * @param name 인사말에 포함될 이름입니다.
- * @param modifier 이 컴포저블에 적용할 Modifier입니다.
+ * 내부적으로 인증 성공 여부(`isPinCorrect`) 상태를 관리합니다.
+ * - PIN이 아직 인증되지 않은 경우: [PinInputScreen]을 표시합니다.
+ * - PIN 인증에 성공한 경우: [SuccessScreen]을 표시합니다.
  */
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun PinAuthScreen() {
+    var isPinCorrect by remember { mutableStateOf(false) }
+
+    if (isPinCorrect) {
+        SuccessScreen()
+    } else {
+        PinInputScreen(onPinCorrect = { isPinCorrect = true })
+    }
 }
 
 /**
- * `ComposePinInput` 컴포저블의 다양한 사용 예시를 보여주는 미리보기 함수입니다.
  *
- * 이 함수는 여러 스타일과 속성을 가진 `ComposePinInput` 필드들을 수직으로 나열하여
- * 라이브러리의 기능을 시연합니다. 각 필드는 동일한 상태(`pin`)를 공유하며,
- * PIN 입력이 완료되면 Toast 메시지를 표시합니다.
  */
 @Composable
-fun PinTextFieldPreview() {
+fun PinInputScreen(onPinCorrect: () -> Unit) {
     var pin by remember { mutableStateOf("") }
-
     val context = LocalContext.current
+    val correctPin = "111111"
 
-    // Text(text = "Hello world")
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("PIN 번호를 입력하세요")
 
-    Spacer(modifier = Modifier.size(20.dp))
-    Spacer(modifier = Modifier.size(20.dp))
+        ComposePinInput(
+            value = pin,
+            mask = '⚫',
+            maxSize = 6,
+            cellBorderColor = Color.Blue,
+            focusedCellBorderColor = Color.Magenta,
+            cellSize = 45.dp,
+            style = ComposePinInputStyle.BOX,
+            onValueChange = { pin = it },
+            onPinEntered = { enteredPin ->
+                if (enteredPin == correctPin) {
+                    onPinCorrect()
+                } else {
+                    Toast.makeText(
+                        context, "잘못된 PIN 번호입니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
-    ComposePinInput(
-        value = pin,
-        mask = '⚫',
-        maxSize = 6,
-        cellBorderColor = Color.Blue,
-        focusedCellBorderColor = Color.Magenta,
-        onValueChange = {
-            pin = it
-        },
-        cellSize = 45.dp,
-        onPinEntered = {
-            Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
-        },
-        style = ComposePinInputStyle.BOX
-    )
+                    pin = "" // 입력된 PIN 번호 초기화
+                }
+            }
+        )
+    }
 }
 
-/**
- * Android Studio의 디자인 탭에서 `PinTextFieldPreview`의 미리보기를 제공하는
- * 컴포저블 함수입니다.
- *
- * `PinTextFieldUsageTheme`를 적용하여 실제 앱 환경과 유사한 모습으로 UI를
- * 렌더링합니다.
- */
-@Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    PinTextFieldUsageTheme {
-        PinTextFieldPreview()
+fun SuccessScreen() {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("PIN 번호 인증 통과!")
     }
 }
