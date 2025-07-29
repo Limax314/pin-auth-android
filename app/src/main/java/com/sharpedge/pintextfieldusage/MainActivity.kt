@@ -25,24 +25,18 @@ import com.sharpedge.pintextfield.ComposePinInput
 import com.sharpedge.pintextfieldusage.ui.theme.PinTextFieldUsageTheme
 
 /**
- * @remarks
- * KDoc 주석 추가 예정
- */
-
-/**
  * @file MainActivity.kt
- * @brief `PinTextFieldLib` 라이브러리의 `ComposePinInput` 사용 예제를 보여주는
- * 메인화면입니다.
+ * @brief `PinTextFieldLib` 라이브러리의 `ComposePinInput` 사용 예제를 보여주는 메인화면입니다.
  * @detail
- * 이 파일은 `ComposePinInput` 컴포저블의 다양한 스타일과 설정을 시연하기 위한
- * 목적으로 작성되었습니다. 여러 개의 PIN 입력 필드를 수직으로 나열하여 각기 다른
- * 스타일(BOX, UNDERLINE)과 길이(maxSize)를 테스트합니다.
+ * 이 파일은 `ComposePinInput` 컴포저블의 다양한 스타일과 설정을 시연하기 위한 목적으로
+ * 작성되었습니다. 1개의 PIN 입력 필드를 각기 다른 스타일(BOX, UNDERLINE)과
+ * 길이(maxSize)로 커스텀하여 테스트합니다.
  */
 
 /**
  * 앱의 메인 엑티비티 클래스입니다.
  *
- * Jectpack Compose를 사용하여 UI를 구성하며, `PinInputScreen`을 화면에 표시하는
+ * Jetpack Compose 라이브러리를 사용하여 UI를 구성하며, `PinAuthScreen`을 화면에 표시하는
  * 역할을 합니다.
  */
 class MainActivity : ComponentActivity() {
@@ -90,7 +84,13 @@ fun PinAuthScreen() {
 }
 
 /**
+ * 사용자에게 PIN 입력을 요청하는 화면을 구성하는 컴포저블 함수입니다.
  *
+ * 이 함수는 `ComposePinInput` 라이브러리를 사용하여 PIN 입력 UI를 표시하고,
+ * 입력된 PIN이 미리 정의된 값("111111")과 일치하는지 확인합니다.
+ *
+ * @param onPinCorrect PIN 번호가 올바르게 입력되었을 때 호출될 콜백 함수입니다.
+ * 이 콜백을 통해 상위 컴포저블에 인증 성공 상태를 전달할 수 있습니다.
  */
 @Composable
 fun PinInputScreen(onPinCorrect: () -> Unit) {
@@ -130,6 +130,12 @@ fun PinInputScreen(onPinCorrect: () -> Unit) {
     }
 }
 
+/**
+ * PIN 인증 성공 화면을 표시하는 컴포저블 함수입니다.
+ *
+ * 화면 중앙에 "PIN 번호 인증 통과!"라는 텍스트를 표시하여
+ * 사용자에게 인증이 성공적으로 완료되었음을 알려줍니다.
+ */
 @Composable
 fun SuccessScreen() {
     Column(

@@ -42,6 +42,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 /**
+ * @file ComposePinInput.kt
+ * @brief Jetpack Compose 환경에서 사용할 수 있는 사용자 정의 PIN 입력 필드를 제공합니다.
+ * @detail
+ * 이 파일은 `ComposePinInput`이라는 재사용 가능한 Composable 함수를 핵심으로 포함하고 있습니다.
+ * 개발자는 이 컴포저블을 사용하여 앱에 PIN 또는 OTP(일회용 비밀번호) 입력 UI를 쉽게 구현할 수
+ * 있습니다.
+ *
+ * [주요 기능]
+ * - 2가지 스타일 지원: 각 입력 셀이 사각형 모양인 'BOX' 스타일과 밑줄이 쳐진 'UNDERLNE' 스타일을
+ * 제공합니다.
+ * - 높은 커스터마이징: 셀의 크기, 모양, 색상, 테두리 두께, 폰트 크기 등 대부분의 시각적 요소를
+ * 파라미터를 통해 자유롭게 설정할 수 있습니다.
+ * - 상태 호이스팅(State Hoisting): `value`와 `onValueChange` 콜백 패턴을 사용하여 Composable
+ * 외부에서 상태를 관리하므로, 더 유연하고 예측 가능한 UI를 만들 수 있습니다.
+ * - 입력 완료 콜백: 사용자가 정해진 길이의 PIN을 모두 입력했을 때(`onPinEntered`) 특정 로직을
+ * 수행하도록 할 수 있습니다.
+ * - 마스킹 기능: 입력된 문자를 지정된 마스크 문자(예: '*')로 가려 개인정보를 보호할 수 있습니다.
+ */
+
+/**
  * PIN 입력 UI 스타일을 정의하는 enum 클래스
  *
  * - [BOX]: 각 PIN 입력란이 박스 형태의 테두리로 표시됩니다.
@@ -176,10 +196,6 @@ public fun ComposePinInput(
                     if (text.length == maxSize) onPinEntered?.invoke(text)
                 }
             },
-            /**
-             * @remarks
-             * 문법 정리 예정
-             */
             /**
              * @param keyboardOptions 키보드의 종류와 입력 완료(IME) 액션을 설정합니다.
              * - `keyboardType = KeyboardType.Number`: 사용자에게 숫자 전용 키보드를 표시합니다.
