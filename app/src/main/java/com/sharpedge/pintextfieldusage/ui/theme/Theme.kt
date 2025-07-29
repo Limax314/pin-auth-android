@@ -15,6 +15,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+/**
+ * @remarks
+ * KDoc 주석 추가 예정
+ */
+
+/**
+ * @remarks
+ * pin-auth-android 프로젝트 배포 예정
+ *
+ * [계획]
+ * - [README.md] 내 `실제 기기에 앱 배포 및 테스트하기` 참고
+ */
+
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
     secondary = PurpleGrey80,
@@ -47,7 +60,9 @@ fun PinTextFieldUsageTheme(
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+
+            if (darkTheme) dynamicDarkColorScheme(context)
+            else dynamicLightColorScheme(context)
         }
 
         darkTheme -> DarkColorScheme
